@@ -1,16 +1,16 @@
 import express from 'express';
 import cloudinary from '../lib/cloudinary.js';
-import Book from '../models/Book.js';
+import Book from '../models/Books.js';
 import protectRoute from '../middleware/auth.middleware.js'; 
 
 const router = express.Router();
 
 router.post('/',protectRoute, async (req, res) => {
     try {
-        const { title, author, genre, publishedYear } = req.body;
+        const { title, caption, rating, image } = req.body;
 
         // Basic validation
-        if (!title || !author || !genre || !publishedYear) {
+        if (!image || !title || !rating || !caption) {
             return res.status(400).json({ message: 'All fields are required!' });
         }
 
@@ -21,11 +21,10 @@ router.post('/',protectRoute, async (req, res) => {
         // save to the database
         const newBook = new Book({
             title,
-            author,
-            genre,
-            publishedYear,
+            caption,
+            rating,
+            user: req.user._id,
             image: imageUrl
-            // user: req.user._id 
         });
 
         await newBook.save();
@@ -35,8 +34,6 @@ router.post('/',protectRoute, async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 });
-//example of a GET request to fetch books with pagination
-//const response = await fetch ("http://localhost:3000/api/books?page=3&limit=5");
 
 router.get('/', protectRoute, async (req,res) => {
     try {

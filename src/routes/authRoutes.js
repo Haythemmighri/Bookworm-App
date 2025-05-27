@@ -1,6 +1,6 @@
 import express from 'express';
-import jwt from 'jsonwebtoken'; // ✅ You forgot to import this
-import User from '../models/User.js'; // ✅ Make sure your model is correctly exported
+import jwt from 'jsonwebtoken'; 
+import User from '../models/User.js'; 
 
 const router = express.Router();
 
