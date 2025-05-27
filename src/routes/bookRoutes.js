@@ -15,7 +15,7 @@ router.post('/',protectRoute, async (req, res) => {
         }
 
         // upload the image to cloudinary
-        const uploadResponse = await cloudinary.uploader.upload(Image);
+        const uploadResponse = await cloudinary.uploader.upload(image);
         const imageUrl = uploadResponse.secure_url;
 
         // save to the database
